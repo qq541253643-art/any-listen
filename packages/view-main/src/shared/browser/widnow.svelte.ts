@@ -33,6 +33,8 @@ const saveWindowInfo = (params: WindowInfo) => {
   setItem(LOCAL_STORE_KEYS.windowInfo, JSON.stringify(params))
 }
 const saveWindowInfoDebounce = debounce(saveWindowInfo, 100)
+const mobileViewport = window.matchMedia('(max-width: 700px)')
+let watchingViewport = false
 const resetWindow = () => {
   document.body.style.removeProperty('position')
   document.body.style.removeProperty('width')
@@ -41,6 +43,16 @@ const resetWindow = () => {
   document.body.style.removeProperty('top')
 }
 export const initWindowInfo = () => {
+  if (!watchingViewport) {
+    mobileViewport.addEventListener('change', initWindowInfo)
+    watchingViewport = true
+  }
+  if (mobileViewport.matches && import.meta.env.VITE_IS_WEB) {
+    setFullScreen(true)
+    setRootOffset(0, 0)
+    resetWindow()
+    return
+  }
   const info = getWindowInfo()
   if (info.isMaximized) {
     setFullScreen(true)
@@ -57,6 +69,7 @@ export const initWindowInfo = () => {
   document.body.style.top = `${info.offsetY}px`
 }
 export const setMaximized = (maximized: boolean) => {
+  if (mobileViewport.matches && import.meta.env.VITE_IS_WEB) return
   if (appState.isFullscreen == maximized) return
   setFullScreen(maximized)
   const info = getWindowInfo()
@@ -84,6 +97,7 @@ export const handleRelease = () => {
 }
 
 export const handleConfigChange = (keys: Array<keyof AnyListen.AppSetting>, setting: Partial<AnyListen.AppSetting>) => {
+  if (mobileViewport.matches && import.meta.env.VITE_IS_WEB) return
   if (keys.includes('common.windowSizeId')) {
     if (appState.isFullscreen) return
     const targetSize = windowSizeList.find((w) => w.id == setting['common.windowSizeId'])

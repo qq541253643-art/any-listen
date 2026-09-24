@@ -161,4 +161,36 @@
     //   margin-right: 10px;
     // }
   }
+  @media (max-width: 700px) {
+    :global(html.web) .header {
+      padding: 8px;
+    }
+    :global(html.web) .left {
+      width: 56px;
+      height: 56px;
+      flex: none;
+    }
+    :global(html.web) .right {
+      min-width: 0;
+      padding: 0 0 0 10px;
+    }
+    :global(html.web) .title {
+      overflow: hidden;
+      font-size: 17px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :global(html.web) .control-btns {
+      gap: 8px;
+      margin-top: 8px;
+    }
+    :global(html.web) .control-btns .btns {
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    :global(html.web) .control-btns :global(.btn) {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
 </style>

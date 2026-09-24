@@ -13,6 +13,7 @@
   import { t } from '@/plugins/i18n'
   import { useSettingValue } from '@/modules/setting/reactive.svelte'
   import MusicHeartBtn from '@/components/common/MusicHeartBtn.svelte'
+  import { openDownloadPanel } from '@/modules/download/panel.svelte'
   import { LIST_IDS } from '@any-listen/common/constants'
   // console.log(querystring)
   let {
@@ -119,6 +120,7 @@
   <div class="list-item-cell auto name-cell">
     <div class="name-left">
       <div class="select name" aria-label={musicinfo.name}>{musicinfo.name}</div>
+      <div class="mobile-singer">{musicinfo.singer}</div>
       <div class="label">
         {#each sourceLabel as label, index (index)}
           <Badge {label} opacity={0.7} type={badgeTypes[index % badgeTypes.length]} />
@@ -150,6 +152,18 @@
       </div>
     {/if}
   </div>
+  {#if import.meta.env.VITE_IS_WEB && !musicinfo.isLocal}
+    <button
+      class="mobile-download"
+      aria-label={`下载 ${musicinfo.name}`}
+      onclick={(event) => {
+        event.stopPropagation()
+        openDownloadPanel([musicinfo])
+      }}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v10l3.5-3.5 1.4 1.4L12 17l-5.9-6.1 1.4-1.4L11 13zM4 19h16v2H4z" /></svg>
+    </button>
+  {/if}
   <div class="list-item-cell" style="flex: 0 0 22%;">
     <span class="select" aria-label={musicinfo.singer}>{musicinfo.singer}</span>
   </div>
@@ -339,6 +353,49 @@
       :global(.badge) {
         padding: 0;
       }
+    }
+  }
+  .mobile-singer {
+    display: none;
+  }
+  .mobile-download {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    :global(html.web) .container {
+      gap: 8px;
+      min-width: 0;
+      font-size: 14px;
+    }
+    :global(html.web) .list-item-cell:not(.name-cell) {
+      display: none;
+    }
+    :global(html.web) .name-left .label {
+      display: none;
+    }
+    :global(html.web) .mobile-singer {
+      display: block;
+      max-width: 100%;
+      overflow: hidden;
+      font-size: 12px;
+      color: var(--color-font-label);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :global(html.web) .mobile-download {
+      display: grid;
+      flex: none;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: var(--color-primary-font);
+      background: transparent;
+      border: 0;
+    }
+    :global(html.web) .mobile-download svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
     }
   }
   .name-right {

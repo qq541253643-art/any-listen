@@ -3,6 +3,15 @@ import type { IPCSocket } from '@/preload/ws'
 // 暴露给前端的方法
 export const createClientMusic = (ipcSocket: IPCSocket) => {
   return {
+    async queueMusicDownloads(musics, quality) {
+      return ipcSocket.remote.queueMusicDownloads(musics, quality)
+    },
+    async getMusicDownloads() {
+      return ipcSocket.remote.getMusicDownloads()
+    },
+    async retryMusicDownload(id) {
+      return ipcSocket.remote.retryMusicDownload(id)
+    },
     async getMusicUrl(id) {
       return ipcSocket.remote.getMusicUrl(id)
     },

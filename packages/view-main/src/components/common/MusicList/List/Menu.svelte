@@ -8,6 +8,7 @@
   import { showMusicAddModal } from '@/components/apis/musicAddModal'
   import { showMusicCommentModal } from '@/components/apis/musicCommentModal'
   import { appState } from '@/modules/app/store/state'
+  import { openDownloadPanel } from '@/modules/download/panel.svelte'
   let {
     source,
     deviceid,
@@ -52,7 +53,9 @@
     const newMenu: Array<MenuList<MenuType>[number] | false> = [
       { action: 'play', label: $t('user_list_music_menu__play') },
       { action: 'playLater', label: $t('user_list_music_menu__play_later') },
-      // { action: 'download', label: $t('user_list_music_menu__download') },
+      import.meta.env.VITE_IS_WEB && !selectInfo.musicInfo.isLocal
+        ? { action: 'download', label: $t('user_list_music_menu__download') }
+        : false,
       { action: 'addTo', label: $t('user_list_music_menu__add_to') },
       local && !localList && { action: 'moveTo', label: $t('user_list_music_menu__move_to') },
       // { action: 'sort', label: $t('user_list_music_menu__sort') },
@@ -82,6 +85,9 @@
 
   const handleClick = (menu: NonNullable<(typeof menus)[number]>) => {
     switch (menu.action) {
+      case 'download':
+        openDownloadPanel(selectInfo.selectedList.length ? selectInfo.selectedList : [selectInfo.musicInfo])
+        break
       case 'play':
         void onplay?.(selectInfo.musicInfo)
         break

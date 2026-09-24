@@ -1,5 +1,10 @@
 import { ipc } from './ipc'
 
+export const queueMusicDownloads: AnyListen.IPC.ServerIPC['queueMusicDownloads'] = (musics, quality) =>
+  ipc.queueMusicDownloads(musics, quality)
+export const getMusicDownloads: AnyListen.IPC.ServerIPC['getMusicDownloads'] = () => ipc.getMusicDownloads()
+export const retryMusicDownload: AnyListen.IPC.ServerIPC['retryMusicDownload'] = (id) => ipc.retryMusicDownload(id)
+
 export const getMusicUrl: AnyListen.IPC.ServerIPC['getMusicUrl'] = async (id) => {
   return ipc.getMusicUrl(id)
 }

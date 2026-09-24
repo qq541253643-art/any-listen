@@ -89,6 +89,7 @@ Upgrade steps:
 |   `UPSTREAM_PROXY_HEADER`   | Proxy request header (e.g. `x-real-ip`), enables proxy when set                              |
 |     `ALLOW_PUBLIC_DIR`      | Allowed local directories, separate multiple with commas                                     |
 |         `DATA_PATH`         | Data storage path, default `./data`                                                          |
+|    `MUSIC_DOWNLOAD_DIR`     | Absolute directory for server-side music downloads; requires write access                   |
 |         `LOGIN_PWD`         | Login password                                                                               |
 |        `CONFIG_PATH`        | Config file path, default `./data/config.js`                                                 |
 |         `LOG_PATH`          | Log storage path, default `./data/logs`                                                      |

@@ -107,4 +107,19 @@
     flex-flow: row nowrap;
     gap: 10px;
   }
+  @media (max-width: 700px) {
+    :global(html.web) .header {
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 8px;
+    }
+    :global(html.web) .btns {
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    :global(html.web) .btns :global(.btn) {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
 </style>

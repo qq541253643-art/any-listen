@@ -10,6 +10,7 @@
   import MiniHeader from './MiniHeader.svelte'
   import Loading from '@/components/base/Loading.svelte'
   import { getListMetaInfo } from './shared'
+  import { openDownloadPanel } from '@/modules/download/panel.svelte'
   let {
     loading = false,
     error = false,
@@ -133,6 +134,12 @@
     bind:listsort
     loaded={!loading && !error}
   />
+  {#if import.meta.env.VITE_IS_WEB && list.some((music) => !music.isLocal)}
+    <div class="download-actions">
+      <button onclick={() => openDownloadPanel(list)}>下载列表歌曲</button>
+      <button onclick={() => openDownloadPanel()}>查看任务</button>
+    </div>
+  {/if}
   <Loading {loading} {error} {onreload} />
 </div>
 
@@ -142,5 +149,19 @@
     display: flex;
     flex: auto;
     flex-flow: column nowrap;
+  }
+  .download-actions {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--color-app-background);
+  }
+  .download-actions button {
+    min-height: 44px;
+    padding: 0 12px;
+    color: var(--color-button-font);
+    background: var(--color-button-background);
+    border: 0;
+    border-radius: 8px;
   }
 </style>

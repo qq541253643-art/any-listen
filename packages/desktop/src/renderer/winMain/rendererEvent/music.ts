@@ -7,6 +7,15 @@ import type { ExposeFunctions } from '.'
 // 暴露给前端的方法
 export const createExposeMusic = () => {
   return {
+    async queueMusicDownloads() {
+      throw new Error('NAS downloads are only available on the web server')
+    },
+    async getMusicDownloads() {
+      return []
+    },
+    async retryMusicDownload() {
+      throw new Error('NAS downloads are only available on the web server')
+    },
     async getMusicUrl(event, info) {
       return getMusicUrl(info)
     },

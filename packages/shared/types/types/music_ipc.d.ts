@@ -54,7 +54,22 @@ declare namespace AnyListen {
       isFromCache: boolean
     }
 
+    type DownloadQuality = Music.Quality
+    type DownloadStatus = 'queued' | 'running' | 'completed' | 'skipped' | 'failed'
+    interface DownloadTask {
+      id: string
+      musicInfo: Music.MusicInfoOnline
+      quality: DownloadQuality
+      status: DownloadStatus
+      progress: number
+      fileName?: string
+      error?: string
+    }
+
     type ServerActions = WarpPromiseRecord<{
+      queueMusicDownloads: (musics: Music.MusicInfo[], quality: DownloadQuality) => DownloadTask[]
+      getMusicDownloads: () => DownloadTask[]
+      retryMusicDownload: (id: string) => DownloadTask[]
       /** 获取歌曲链接 */
       getMusicUrl: (info: GetMusicUrlInfo) => MusicUrlInfo
       /** 获取歌曲链接缓存数量 */

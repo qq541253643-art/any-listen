@@ -97,6 +97,11 @@
     }
   }
 
+  @media (max-width: 700px) {
+    :global(html.web) .control {
+      display: none;
+    }
+  }
   // .svg {
   //   height: 16px;
   // }

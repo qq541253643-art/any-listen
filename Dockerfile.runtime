@@ -1,0 +1,14 @@
+FROM node:22-slim
+
+WORKDIR /server
+RUN useradd --uid 1001 --create-home anylisten && mkdir -p /server/data && chown anylisten:anylisten /server/data
+COPY --chown=anylisten:anylisten . /server
+
+ENV DATA_PATH=/server/data \
+    NODE_ENV=production \
+    PORT=9500 \
+    BIND_IP=0.0.0.0
+
+EXPOSE 9500
+USER anylisten
+CMD ["node", "index.cjs"]

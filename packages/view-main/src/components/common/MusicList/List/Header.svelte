@@ -17,7 +17,7 @@
   // console.log(params)
 </script>
 
-<div class="header">
+<div class="header" class:multimode>
   <div class="num" style={`width:${picwidth}px;`}>
     {#if multimode}
       <Checkbox
@@ -64,5 +64,13 @@
     align-items: center;
     justify-content: center;
     // color: var(--color-font-label);
+  }
+  @media (max-width: 700px) {
+    :global(html.web) .header:not(.multimode) {
+      display: none;
+    }
+    :global(html.web) .header > span:not(:first-of-type) {
+      display: none;
+    }
   }
 </style>

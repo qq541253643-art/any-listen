@@ -3,6 +3,15 @@ import type { MainCall } from '.'
 // 暴露给前端的方法
 export const createClientMusic = (main: MainCall) => {
   return {
+    async queueMusicDownloads() {
+      throw new Error('NAS downloads are only available on the web server')
+    },
+    async getMusicDownloads() {
+      return []
+    },
+    async retryMusicDownload() {
+      throw new Error('NAS downloads are only available on the web server')
+    },
     async getMusicUrl(id) {
       return main.getMusicUrl(id)
     },

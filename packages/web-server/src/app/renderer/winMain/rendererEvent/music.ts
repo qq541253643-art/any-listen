@@ -1,5 +1,6 @@
 import { appState } from '@/app/app'
 import { getLyricInfo, getMusicPic, getMusicUrl } from '@/app/modules/music'
+import { getMusicDownloads, queueMusicDownloads, retryMusicDownload } from '@/app/modules/music/download'
 import { workers } from '@/app/worker'
 
 import type { ExposeClientFunctions } from '.'
@@ -7,6 +8,15 @@ import type { ExposeClientFunctions } from '.'
 // 暴露给前端的方法
 export const createExposeMusic = () => {
   return {
+    async queueMusicDownloads(event, musics, quality) {
+      return queueMusicDownloads(musics, quality)
+    },
+    async getMusicDownloads(event) {
+      return getMusicDownloads()
+    },
+    async retryMusicDownload(event, id) {
+      return retryMusicDownload(id)
+    },
     async getMusicUrl(event, info) {
       return getMusicUrl(info)
     },

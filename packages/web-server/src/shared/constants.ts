@@ -4,6 +4,7 @@ export const ENV_PARAMS = [
   'CONFIG_PATH',
   'LOG_PATH',
   'DATA_PATH',
+  'MUSIC_DOWNLOAD_DIR',
   'PROXY_HEADER',
   'LOGIN_PWD',
   'ALLOW_PUBLIC_DIR',

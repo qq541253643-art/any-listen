@@ -74,6 +74,28 @@ html {
     //   border-bottom-left-radius: 0;
     // }
   }
+  @media (max-width: 700px) {
+    &.web {
+      padding: 0;
+      &, &.fullscreen {
+        min-width: 0;
+        min-height: 0;
+      }
+      #body, #root {
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .player .player-inner > :last-child {
+        gap: 0;
+        padding: 0 4px;
+      }
+      .player .player-inner > :last-child button {
+        width: 44px;
+        height: 44px;
+        justify-content: center;
+      }
+    }
+  }
 
   &.disable-animation * {
     transition: none !important;

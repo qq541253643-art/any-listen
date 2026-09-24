@@ -1,6 +1,7 @@
 import './shared/error'
 import { appState, initAppEnv, sendInitedEvent } from '@/app/app'
 import { appLog } from '@/shared/log4js'
+import { initDownloadQueue } from '@/app/modules/music/download'
 
 import { initI18n } from './i18n'
 import { initModules } from './modules'
@@ -17,6 +18,8 @@ export const initApp = async () => {
   void startExtensionServiceWorker()
   await initModules()
   await initRenderers()
+
+  initDownloadQueue()
 
   sendInitedEvent()
   appLog.info('app initialized.')

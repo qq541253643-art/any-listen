@@ -360,6 +360,21 @@
     }
   }
 
+  @media (max-width: 700px) {
+    :global(html.web) .search-input {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      height: 44px;
+    }
+    :global(html.web) .content .form {
+      height: 44px;
+    }
+    :global(html.web) .content .form button {
+      min-width: 44px;
+    }
+  }
+
   .big {
     width: 100%;
     // input {
