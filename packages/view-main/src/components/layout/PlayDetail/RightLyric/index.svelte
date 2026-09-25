@@ -24,4 +24,9 @@
     inset: 0;
     // margin-right: 20px;
   }
+  @media (max-width: 700px) {
+    .right-lyric-content {
+      inset: 0 16px;
+    }
+  }
 </style>

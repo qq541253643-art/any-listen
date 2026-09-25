@@ -13,7 +13,7 @@
   let isMsDown = $state(false)
   let isStopScroll = $state(false)
   let timeStr = $state('--/--')
-  let winRadio = $state(document.getElementById('root')!.clientWidth / 1020)
+  let winRadio = $state(Math.max(1, document.getElementById('root')!.clientWidth / 1020))
   const textAlign = useSettingValue('playDetail.style.align')
   const isZoomActiveLrc = useSettingValue('playDetail.isZoomActiveLrc')
   // const isShowLyricProgressSetting = useSettingValue('playDetail.isShowLyricProgressSetting')
@@ -53,7 +53,7 @@
 
   onMount(() => {
     const unsub = onDomSizeChanged(document.getElementById('root')!, (width) => {
-      winRadio = width / 1020
+      winRadio = Math.max(1, width / 1020)
     })
     return () => {
       unsub()
