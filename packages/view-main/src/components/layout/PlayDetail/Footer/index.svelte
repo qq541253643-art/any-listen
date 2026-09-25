@@ -65,4 +65,33 @@
     padding-left: 16px;
     margin-left: -10px;
   }
+
+  @media (max-width: 700px) {
+    .footer {
+      height: 154px;
+    }
+    .footer-content {
+      padding: 0 12px 12px;
+    }
+    .control {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .control > :global(.container) {
+      order: -1;
+      justify-content: center;
+      width: 100%;
+      height: 56px;
+      padding: 0;
+    }
+    .side {
+      flex: 0 0 50%;
+      height: 36px;
+      padding: 0;
+    }
+    .right {
+      padding: 0;
+      margin: 0;
+    }
+  }
 </style>

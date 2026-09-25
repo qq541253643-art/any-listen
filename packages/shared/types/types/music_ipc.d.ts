@@ -60,6 +60,8 @@ declare namespace AnyListen {
       id: string
       musicInfo: Music.MusicInfoOnline
       quality: DownloadQuality
+      savedQuality?: DownloadQuality
+      fileBitrateLabel?: string
       status: DownloadStatus
       progress: number
       fileName?: string

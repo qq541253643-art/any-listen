@@ -2,15 +2,19 @@ import { access, constants, realpath, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
 
-import { buildMusicName, getFileType } from '@any-listen/common/tools'
+import { buildMusicName, getFileType, VIRTUAL_PROTOCOL } from '@any-listen/common/tools'
+import { API_PREFIX, PROXY_SERVER_PATH } from '@any-listen/common/constants'
+import { buildFileMetadata } from '@any-listen/nodejs/music'
 
 import getStore from '@/app/shared/store'
 import { nodeProcess } from '@/shared/utils'
 import { getMusicUrl } from './index'
 import { writeAudio } from './writeAudio'
+import { toDownloadUrl } from './downloadUrl'
 
 const MAX_BATCH = 500
 const QUALITIES: AnyListen.Music.Quality[] = ['128k', '192k', '320k', 'flac', 'flac24bit', 'wav', 'dolby', 'master']
+const FALLBACK_QUALITIES: AnyListen.IPCMusic.DownloadQuality[] = ['flac24bit', 'flac', '320k', '192k', '128k']
 let tasks: AnyListen.IPCMusic.DownloadTask[] | null = null
 let busy = false
 
@@ -30,29 +34,36 @@ const getDirectory = async () => {
 const download = async (task: AnyListen.IPCMusic.DownloadTask) => {
   const root = await getDirectory()
   let lastError: unknown
-  for (let attempt = 0; attempt < 2; attempt++) {
+  const start = FALLBACK_QUALITIES.indexOf(task.quality)
+  const qualities = start < 0 ? [task.quality] : FALLBACK_QUALITIES.slice(start)
+  for (const quality of qualities) {
     try {
-      const resolved = await getMusicUrl({ musicInfo: task.musicInfo, quality: task.quality, isRefresh: true })
-      if (resolved.quality !== task.quality) throw new Error('Requested audio quality is unavailable')
-      const source = new URL(resolved.url)
-      if (!['http:', 'https:'].includes(source.protocol) || source.username || source.password) {
-        throw new Error('Music source returned an invalid URL')
+      const resolved = await getMusicUrl({ musicInfo: task.musicInfo, quality, isRefresh: true })
+      const actualQuality = resolved.quality as AnyListen.IPCMusic.DownloadQuality
+      if (!QUALITIES.includes(actualQuality) ||
+        (start >= 0 && FALLBACK_QUALITIES.indexOf(actualQuality) < start)) {
+        throw new Error('Music source returned an unsupported audio quality')
       }
+      const port = Number(nodeProcess.env.PORT ?? 9500)
+      const source = toDownloadUrl(resolved.url, port, VIRTUAL_PROTOCOL, `${API_PREFIX}${PROXY_SERVER_PATH}`)
       const response = await fetch(source, { signal: AbortSignal.timeout(10 * 60_000) })
       const result = await writeAudio({
         root,
         id: task.id,
-        baseName: buildMusicName('%singer% - %name%', task.musicInfo.name, task.musicInfo.singer),
-        fallbackExtension: getFileType(resolved.quality),
+        baseName: `${buildMusicName('%singer% - %name%', task.musicInfo.name, task.musicInfo.singer)} (请求${task.quality})`,
+        fallbackExtension: getFileType(actualQuality),
         response,
         onProgress: (progress) => (task.progress = progress),
       })
       task.status = result.status
       task.fileName = result.fileName
+      task.savedQuality = actualQuality
+      task.fileBitrateLabel = (await buildFileMetadata(path.join(root, result.fileName)).catch(() => null))?.bitrateLabel || undefined
       task.progress = 100
       return
     } catch (error) {
       lastError = error
+      task.progress = 0
     }
   }
   throw lastError

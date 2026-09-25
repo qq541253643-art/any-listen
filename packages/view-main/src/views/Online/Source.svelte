@@ -91,4 +91,24 @@
       }
     }
   }
+
+  @media (max-width: 700px) {
+    .source-list {
+      width: auto;
+      max-width: none;
+      min-height: 44px;
+      margin: 0 12px 8px;
+    }
+    .list {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden !important;
+    }
+    .list-item {
+      flex: none;
+      padding: 0 14px;
+      line-height: 44px;
+      white-space: nowrap;
+    }
+  }
 </style>

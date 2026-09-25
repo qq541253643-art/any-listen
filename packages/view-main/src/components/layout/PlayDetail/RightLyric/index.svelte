@@ -16,6 +16,7 @@
   .right-lyric {
     position: relative;
     flex: auto;
+    min-height: 0;
     contain: strict;
   }
   .right-lyric-content {

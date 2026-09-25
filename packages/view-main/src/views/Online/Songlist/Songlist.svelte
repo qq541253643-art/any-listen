@@ -54,4 +54,9 @@
     min-height: 0;
     padding-top: 10px;
   }
+  @media (max-width: 700px) {
+    .online-songlist-list {
+      flex-direction: column;
+    }
+  }
 </style>

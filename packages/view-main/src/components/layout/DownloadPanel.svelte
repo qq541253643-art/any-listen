@@ -83,7 +83,7 @@
             <small>{task.error ?? {
               queued: '等待中', running: `下载中 ${task.progress}%`, completed: '已完成',
               skipped: '文件已存在，已跳过', failed: '失败',
-            }[task.status]}{task.fileName ? ` · ${task.fileName}` : ''}</small>
+            }[task.status]}{task.savedQuality && task.savedQuality !== task.quality ? ` · 来源标注 ${task.savedQuality.toUpperCase()}` : ''}{task.fileBitrateLabel ? ` · 文件检测 ${task.fileBitrateLabel.toUpperCase()}` : ''}{task.fileName ? ` · ${task.fileName}` : ''}</small>
           </div>
           {#if task.status === 'failed'}
             <button onclick={() => retry(task.id)}>重试</button>

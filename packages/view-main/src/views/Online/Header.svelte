@@ -50,4 +50,28 @@
     //   padding: 0 15px;
     // }
   }
+
+  @media (max-width: 700px) {
+    .header {
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 0 12px;
+    }
+    .header :global(.list) {
+      width: 100%;
+      min-width: 0;
+      gap: 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .header :global(.list-item) {
+      flex: none;
+    }
+    #online-header-right {
+      width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+    }
+  }
 </style>
