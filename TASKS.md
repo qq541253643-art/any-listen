@@ -8,3 +8,9 @@
 - [x] Linux `pnpm build:web`, seven writer tests, and local runtime image startup/mount check.
 - [x] Authenticated phone/desktop layout smoke check and synthetic local playback; real NAS source and 93-song playlist remain for deployment validation.
 - [ ] Review NAS deployment change and validate saved file in team music folder.
+
+## Current follow-up
+
+- [ ] Reproduce whether iOS background playback is better in Safari / Home Screen web app than in the Zspace in-app browser.
+- [ ] Decide whether a native iOS shell is in scope; do not treat the web deployment as a native background-audio fix.
+- [ ] Audit source results that return an invalid URL or unavailable requested quality, then define fallback behavior.

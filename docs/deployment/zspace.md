@@ -8,16 +8,16 @@ Build the web distribution on Linux with Node 22 and `pnpm build:web`. Package t
 
 ## Container change
 
-Create `团队文件夹/音乐/下载` before starting the new container. In the existing container configuration, keep the current music mount:
+Create a `下载` directory inside your mounted team music folder before starting the new container. In the existing container configuration, keep the current music mount and replace the example host path below with the path reported by your NAS:
 
 ```text
-/tmp/zfsv3/sata11/public/狂朝共享/音乐  ->  /music       read-only
+<team-music-host-path>/音乐         ->  /music       read-only
 ```
 
 Add only this new writable mount and environment variable:
 
 ```text
-/tmp/zfsv3/sata11/public/狂朝共享/音乐/下载  ->  /downloads  read-write
+<team-music-host-path>/音乐/下载    ->  /downloads  read-write
 MUSIC_DOWNLOAD_DIR=/downloads
 ```
 
@@ -25,4 +25,4 @@ The NAS folder must be writable by the container's UID 1001. Verify that before 
 
 ## Acceptance and rollback
 
-After replacing the image, verify desktop playback, phone navigation at a narrow viewport, the existing music source, and existing lists. Queue one song that the owner is allowed to save and verify a playable file appears under `团队文件夹/音乐/下载`. Then queue a short test list, close the browser, and verify completion and status after reopening. Retry a failure and confirm an existing file is skipped. If playback or download fails, restore the prior image and remove only the new `/downloads` mount and `MUSIC_DOWNLOAD_DIR`; leave the music and data directories intact.
+After replacing the image, verify desktop playback, phone navigation at a narrow viewport, the existing music source, and existing lists. Queue one song that the owner is allowed to save and verify a playable file appears under the mounted download directory. Then queue a short test list, close the browser, and verify completion and status after reopening. Retry a failure and confirm an existing file is skipped. If playback or download fails, restore the prior image and remove only the new `/downloads` mount and `MUSIC_DOWNLOAD_DIR`; leave the music and data directories intact.

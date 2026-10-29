@@ -4,6 +4,12 @@
 
 <br />
 
+## Personal Zspace build
+
+This repository is a personal, non-commercial customization of [Any Listen](https://github.com/any-listen/any-listen). It adds a phone-sized web layout and a server-side download queue that writes playable audio into a mounted NAS folder. The upstream desktop and web-server behavior remains the base for these changes.
+
+Start with [PRODUCT_SPEC.md](./PRODUCT_SPEC.md) for the accepted behavior, [PROJECT_STATUS.md](./PROJECT_STATUS.md) for current validation, and [docs/deployment/zspace.md](./docs/deployment/zspace.md) for a sanitized deployment outline. [docs/ios-background-playback.md](./docs/ios-background-playback.md) explains why hosting the player on a NAS does not make iOS keep a web player running in the background.
+
 English | [简体中文](./docs/README_zh.md) | [繁體中文](./docs/README_zh-tw.md)
 
 This project is under active development and currently provides both a **Desktop version** and a **Web service version**.

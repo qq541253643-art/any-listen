@@ -5,4 +5,4 @@
 - Keep secrets, browser state, NAS credentials, and real music files out of Git and logs.
 - Preserve the project's license and attribution; this deployment is for the owner's personal use.
 - Never make a client-supplied URL or path an unrestricted server download target.
-- Test mobile navigation and playback, download queue/file safety, and desktop regression before changing the NAS deployment. Keep SSH disabled.
+- Test mobile navigation and playback, download queue/file safety, and desktop regression before changing the NAS deployment. Use SSH only when the NAS owner explicitly enables it, and never persist credentials in project files or logs.
